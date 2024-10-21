@@ -1,0 +1,12 @@
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage
+/.nx/cache
+/.nx/workspace-data
+.github/
+.vscode/
+build/
+node_modules/
+tmp/
+public/
+package.json
