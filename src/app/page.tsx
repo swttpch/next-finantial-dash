@@ -1,3 +1,4 @@
+import ActivityGraph from '@/components/ActivityGraph';
 import PageTitle from '@/components/PageTitle';
 import StatsCard from '@/components/StatsCard';
 import { getDashboardCard } from '@/helpers/getDashboardCard';
@@ -26,9 +27,12 @@ export default function Home() {
             label={el.label}
             number={el.number}
             statHelper={el.statHelper}
+            secondaryColor={el.secondaryColor}
+            primaryColor={el.primaryColor}
           />
         ))}
       </Flex>
+      <ActivityGraph />
     </>
   );
 }

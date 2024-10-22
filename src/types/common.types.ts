@@ -6,11 +6,14 @@ export interface LinkItemProps {
   href: string;
 }
 
-export interface StatsProps {
+export interface StatsCardProps {
   label: string;
   number: string;
   statHelper?: {
     type: 'increase' | 'decrease';
     value: string;
+    from?: string;
   };
+  primaryColor: string;
+  secondaryColor: string;
 }

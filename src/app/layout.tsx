@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 // import localFont from "next/font/local";
 import './globals.css';
+import 'chart.js/auto';
 import { Providers } from '@/providers/chakra.provider';
 import DefaultLayout from '@/layouts/DefaultaLayout';
 

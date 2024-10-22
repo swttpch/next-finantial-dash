@@ -1,4 +1,4 @@
-import { StatsProps } from '@/types/common.types';
+import { StatsCardProps } from '@/types/common.types';
 
 interface getDashboardCardProps {
   balance: number;
@@ -16,11 +16,11 @@ export const getDashboardCard = ({
   lastMonthIncome,
   totalExpense,
   totalIncome,
-}: getDashboardCardProps): Array<StatsProps> => {
+}: getDashboardCardProps): Array<StatsCardProps> => {
   const balanceDifference = balance / lastMonthBalance;
   const incomesDifference = totalIncome / lastMonthIncome;
   const expensesDifference = totalExpense / lastMonthExpense;
-  const balanceCard: StatsProps = {
+  const balanceCard: StatsCardProps = {
     label: 'Balance',
     number: balance.toLocaleString('pt-br', {
       style: 'currency',
@@ -38,9 +38,11 @@ export const getDashboardCard = ({
         }),
       },
     }),
+    primaryColor: 'blue.500',
+    secondaryColor: 'blue.50',
   };
 
-  const incomesCard: StatsProps = {
+  const incomesCard: StatsCardProps = {
     label: 'Total Incomes',
     number: totalIncome.toLocaleString('pt-br', {
       style: 'currency',
@@ -58,9 +60,11 @@ export const getDashboardCard = ({
         }),
       },
     }),
+    primaryColor: 'green.500',
+    secondaryColor: 'green.50',
   };
 
-  const expensesCard: StatsProps = {
+  const expensesCard: StatsCardProps = {
     label: 'Total Expenses',
     number: totalExpense.toLocaleString('pt-br', {
       style: 'currency',
@@ -69,16 +73,17 @@ export const getDashboardCard = ({
     ...(expensesDifference !== 1 && {
       statHelper: {
         type: expensesDifference > 1 ? 'increase' : 'decrease',
-        value:
-          (expensesDifference > 1 ? expensesDifference - 1 : 1 - expensesDifference).toLocaleString(
-            'pt-br',
-            {
-              style: 'percent',
-              minimumFractionDigits: 1,
-            },
-          ) + ' from last month',
+        value: (expensesDifference > 1
+          ? expensesDifference - 1
+          : 1 - expensesDifference
+        ).toLocaleString('pt-br', {
+          style: 'percent',
+          minimumFractionDigits: 1,
+        }),
       },
     }),
+    primaryColor: 'red.500',
+    secondaryColor: 'red.50',
   };
 
   return [balanceCard, incomesCard, expensesCard];
