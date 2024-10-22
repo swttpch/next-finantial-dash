@@ -16,7 +16,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: 'none', md: 'flex' }}
         items={LINK_ITEMS}
       />
       <Drawer
