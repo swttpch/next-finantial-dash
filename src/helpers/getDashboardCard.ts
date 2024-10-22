@@ -69,13 +69,14 @@ export const getDashboardCard = ({
     ...(expensesDifference !== 1 && {
       statHelper: {
         type: expensesDifference > 1 ? 'increase' : 'decrease',
-        value: (expensesDifference > 1
-          ? expensesDifference - 1
-          : 1 - expensesDifference
-        ).toLocaleString('pt-br', {
-          style: 'percent',
-          minimumFractionDigits: 2,
-        }),
+        value:
+          (expensesDifference > 1 ? expensesDifference - 1 : 1 - expensesDifference).toLocaleString(
+            'pt-br',
+            {
+              style: 'percent',
+              minimumFractionDigits: 1,
+            },
+          ) + ' from last month',
       },
     }),
   };
