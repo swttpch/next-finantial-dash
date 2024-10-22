@@ -1,7 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Box, useColorModeValue, Drawer, DrawerContent, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  useColorModeValue,
+  Drawer,
+  DrawerContent,
+  useDisclosure,
+  Flex,
+} from '@chakra-ui/react';
 import { SidebarContent } from '@/components/Sidebar';
 import { MobileNav } from '@/components/MobileNav';
 import { LINK_ITEMS } from '@/constants/sidemenu.constants';
@@ -33,9 +40,9 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      <Flex ml={{ base: 0, md: 60 }} p="4" gap={6} direction={'column'}>
         {children}
-      </Box>
+      </Flex>
     </Box>
   );
 }

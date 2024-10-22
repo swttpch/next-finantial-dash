@@ -40,3 +40,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.test {
+  outline: 1px dashed red;
+}

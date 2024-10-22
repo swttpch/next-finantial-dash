@@ -19,7 +19,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     >
       <IconButton variant="outline" onClick={onOpen} aria-label="open menu" icon={<FiMenu />} />
 
-      <Text fontSize="xl" ml="8" fontFamily="monospace" fontWeight="bold">
+      <Text fontSize="xl" ml="8" fontWeight="bold">
         Finantial App
       </Text>
     </Flex>
