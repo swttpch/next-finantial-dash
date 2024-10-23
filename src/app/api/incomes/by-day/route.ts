@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const rawData = JSON.parse(file) as Array<TransactionType>;
 
   const transactionsByDay = rawData
-    .sort((a, b) => b.date - a.date)
+    .sort((a, b) => a.date - b.date)
     .reduce((acc, transaction) => {
       if (transaction.transaction_type === 'withdraw') {
         return acc;
@@ -26,8 +26,8 @@ export async function GET(request: Request) {
     acc.push({ value: total.toString(), date: cur });
     return acc;
   }, [] as Array<{ value: string; date: string }>);
-  const slicedData = responseData.slice(0, Number(days ?? responseData.length));
-  return new Response(JSON.stringify(slicedData.reverse()), {
+  const slicedData = responseData.slice(responseData.length - Number(days ?? responseData.length));
+  return new Response(JSON.stringify(slicedData), {
     headers: {
       'content-type': 'application/json',
     },

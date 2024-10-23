@@ -18,5 +18,11 @@ export const getBalanceByDay = async (days: string) => {
     method: 'GET',
     cache: 'force-cache',
   });
-  return (await data.json()) as Array<{ value: string; date: string }>;
+  return (await data.json()) as Array<{
+    value: string;
+    date: string;
+    expenses: string;
+    incomes: string;
+    old_balance: string;
+  }>;
 };

@@ -1,5 +1,6 @@
 import { TransactionType } from '@/types/transaction.types';
 import { promises as fs } from 'fs';
+
 // TODO: add cache control
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
@@ -8,7 +9,7 @@ export async function GET(request: Request) {
   const rawData = JSON.parse(file) as Array<TransactionType>;
 
   const transactionsByDay = rawData
-    .sort((a, b) => b.date - a.date)
+    .sort((a, b) => a.date - b.date)
     .reduce((acc, transaction) => {
       const date = new Date(transaction.date).toISOString().split('T')[0];
       if (!acc[date]) {
@@ -18,16 +19,49 @@ export async function GET(request: Request) {
       return acc;
     }, {} as Record<string, TransactionType[]>);
 
-  const responseData = Object.keys(transactionsByDay).reduce((acc, cur) => {
+  let runningBalance = 0; // Initialize a running balance to track old balance across iterations
+  const responseData = Object.keys(transactionsByDay).reduce((acc, cur, index) => {
     const total = transactionsByDay[cur].reduce(
-      (acc, cur) => (acc += Number(cur.amount) * (cur.transaction_type === 'deposit' ? 1 : -1)),
-      0,
+      (innerAcc, current) => {
+        const amount = Number(current.amount);
+        if (current.transaction_type === 'deposit') {
+          innerAcc.incomes += amount;
+          innerAcc.balance += amount;
+        }
+        if (current.transaction_type === 'withdraw') {
+          innerAcc.expenses += amount;
+          innerAcc.balance -= amount;
+        }
+        return innerAcc;
+      },
+      {
+        balance: 0,
+        incomes: 0,
+        expenses: 0,
+      },
     );
-    acc.push({ value: total.toString(), date: cur });
+
+    const oldBalance = runningBalance; // Use the running balance as old balance
+    const newBalance = oldBalance + total.balance;
+    acc.push({
+      value: newBalance.toString(),
+      date: cur,
+      incomes: total.incomes.toString(),
+      expenses: total.expenses.toString(),
+      old_balance: oldBalance.toString(),
+    });
+
+    runningBalance = newBalance; // Update running balance for the next iteration
+
     return acc;
-  }, [] as Array<{ value: string; date: string }>);
-  const slicedData = responseData.slice(0, Number(days ?? responseData.length));
-  return new Response(JSON.stringify(slicedData.reverse()), {
+  }, [] as Array<{ value: string; date: string; incomes: string; expenses: string; old_balance: string }>);
+
+  const slicedData = responseData.slice(
+    responseData.length - (Number(days) || 0),
+    responseData.length,
+  );
+
+  return new Response(JSON.stringify(slicedData), {
     headers: {
       'content-type': 'application/json',
     },

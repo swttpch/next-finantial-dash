@@ -8,7 +8,8 @@ import { getExpensesByDay, getExpensesData } from '@/data/expenses';
 import { getHistoryData } from '@/data/history';
 import { getIncomesByDay, getIncomesData } from '@/data/incomes';
 import { getDashboardCard } from '@/helpers/getDashboardCard';
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
+import { IoFilterCircleOutline } from 'react-icons/io5';
 
 export default async function Dashboard({
   searchParams,
@@ -18,17 +19,16 @@ export default async function Dashboard({
   const period = ((await searchParams).period as string) || '7';
   const page = ((await searchParams).page as string) || '1';
   const pageSize = ((await searchParams).pagesize as string) || '10';
-  const balances = await getBalanceData();
   const balancesByDay = await getBalanceByDay(period);
-  const expenses = await getExpensesData();
   const expensesByDay = await getExpensesByDay(period);
-  const incomes = await getIncomesData();
   const incomesByDay = await getIncomesByDay(period);
   const history = await getHistoryData({ page: Number(page), pageSize: Number(pageSize) });
   return (
     <>
       <PageTitle title="Summary">
-        <SelectPeriod />
+        <Button variant={'outline'} leftIcon={<IoFilterCircleOutline />}>
+          Filter
+        </Button>
       </PageTitle>
       <Flex
         direction={{ base: 'column', md: 'row' }}
@@ -37,12 +37,12 @@ export default async function Dashboard({
         gap={6}
       >
         {getDashboardCard({
-          balance: balances.total,
-          lastMonthBalance: balances.lastMonth,
-          lastMonthExpense: expenses.lastMonth,
-          lastMonthIncome: incomes.lastMonth,
-          totalExpense: expenses.total,
-          totalIncome: incomes.total,
+          balance: balancesByDay[balancesByDay.length - 1].value,
+          lastMonthBalance: balancesByDay[balancesByDay.length - 2].value,
+          lastMonthExpense: balancesByDay[balancesByDay.length - 2].expenses,
+          lastMonthIncome: balancesByDay[balancesByDay.length - 2].incomes,
+          totalExpense: balancesByDay[balancesByDay.length - 1].expenses,
+          totalIncome: balancesByDay[balancesByDay.length - 1].incomes,
           balances: balancesByDay,
           incomes: incomesByDay,
           expenses: expensesByDay,
@@ -59,7 +59,13 @@ export default async function Dashboard({
         ))}
       </Flex>
       <Flex gap={12} alignSelf={'stretch'} direction={{ base: 'column', md: 'row' }}>
-        <ActivityGraph incomesColor={'green.500'} expensesColor={'red.500'} />
+        <ActivityGraph
+          incomesColor={'green.500'}
+          expensesColor={'red.500'}
+          balanceColor={'blue.500'}
+          oldBalanceColor="gray.500"
+          data={balancesByDay}
+        />
       </Flex>
       <HomeHistoryTable data={history} />
     </>
