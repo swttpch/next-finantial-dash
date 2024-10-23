@@ -1,5 +1,6 @@
 'use client';
 
+import { TransactionType } from '@/types/transaction.types';
 import { Box, BoxProps } from '@chakra-ui/react';
 import {
   Chart as ChartJS,
@@ -17,18 +18,19 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 interface SimpleLineChartProps extends BoxProps {
   chartColor: string;
+  data: TransactionType[];
 }
 
-function SimpleLineChart({ chartColor, ...rest }: SimpleLineChartProps) {
+function SimpleLineChart({ chartColor, data, ...rest }: SimpleLineChartProps) {
   return (
     <Box {...rest}>
       <Line
         data={{
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: data.map((item) => item.date),
           datasets: [
             {
-              label: 'My First Dataset',
-              data: [65, 59, 80, 81, 56, 55, 40],
+              label: '',
+              data: data.map((item) => item.amount),
               fill: false,
               borderColor: chartColor,
               tension: 0.4,

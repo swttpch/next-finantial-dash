@@ -1,4 +1,5 @@
 import { IconType } from 'react-icons';
+import { TransactionType } from './transaction.types';
 
 export interface LinkItemProps {
   name: string;
@@ -13,7 +14,9 @@ export interface StatsCardProps {
     type: 'increase' | 'decrease';
     value: string;
     from?: string;
+    isReverse?: boolean;
   };
   primaryColor: string;
   secondaryColor: string;
+  data: Array<TransactionType>;
 }

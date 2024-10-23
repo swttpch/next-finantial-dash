@@ -10,7 +10,7 @@ function PageTitle({ title }: PageTitleProps) {
         <Heading as={'h1'} size={'xl'}>
           {title}
         </Heading>
-        <Button colorScheme="cyan">Adicionar</Button>
+        {/* <Button colorScheme="cyan">Adicionar</Button> */}
       </Flex>
     </>
   );

@@ -40,7 +40,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-      <Flex ml={{ base: 0, md: 60 }} p="4" gap={6} direction={'column'}>
+      <Flex ml={{ base: 0, md: 60 }} p="4" gap={8} direction={'column'}>
         {children}
       </Flex>
     </Box>

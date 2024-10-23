@@ -4,9 +4,19 @@ import { StatsCardProps } from '@/types/common.types';
 import { Card, CardBody, Flex, Stat, StatArrow, StatLabel, Text, useToken } from '@chakra-ui/react';
 
 import SimpleLineChart from './Charts/SimpleLineChart';
+import { usePeriod } from '@/hooks/usePeriod';
+import { PERIODS } from '@/constants/periods';
 
-function StatsCard({ label, number, statHelper, secondaryColor, primaryColor }: StatsCardProps) {
+function StatsCard({
+  label,
+  number,
+  statHelper,
+  secondaryColor,
+  primaryColor,
+  data,
+}: StatsCardProps) {
   const tokenColor = useToken('colors', primaryColor);
+  const { period } = usePeriod();
   return (
     <>
       <Card data-type="Card" overflow="hidden" flex={1} bgColor={secondaryColor}>
@@ -19,23 +29,27 @@ function StatsCard({ label, number, statHelper, secondaryColor, primaryColor }: 
               align={'center'}
               justify={'space-between'}
             >
-              <Text fontSize={'xx-large'} fontWeight={'bold'} data-type="StatNumber">
+              <Text fontSize={'xl'} fontWeight={'bold'} data-type="StatNumber">
                 {number}
               </Text>
               {statHelper && (
                 <Flex direction={'column'} align={'center'}>
                   <Text fontSize={'sm'} data-type="StatHelpText">
-                    <StatArrow data-type="StatArrow" type={statHelper.type}></StatArrow>
+                    <StatArrow
+                      transform={statHelper.isReverse ? 'rotate(180deg)' : 'none'}
+                      data-type="StatArrow"
+                      type={statHelper.type}
+                    ></StatArrow>
                     {statHelper.value}
                   </Text>
                   <Text fontSize={'xx-small'} data-type="StatHelpText">
-                    From last month
+                    {statHelper.from}
                   </Text>
                 </Flex>
               )}
             </Flex>
           </Stat>
-          <SimpleLineChart chartColor={tokenColor} height={'70px'} />
+          <SimpleLineChart chartColor={tokenColor} height={'70px'} data={data} />
         </CardBody>
       </Card>
     </>

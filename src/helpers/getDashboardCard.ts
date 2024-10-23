@@ -1,12 +1,18 @@
 import { StatsCardProps } from '@/types/common.types';
+import { getCurrency, getCurrencyValue } from './getCurrencyValue';
+import { TransactionType } from '@/types/transaction.types';
+import { PERIODS } from '@/constants/periods';
 
 interface getDashboardCardProps {
-  balance: number;
-  totalIncome: number;
-  totalExpense: number;
-  lastMonthIncome: number;
-  lastMonthExpense: number;
-  lastMonthBalance: number;
+  balance: string;
+  totalIncome: string;
+  totalExpense: string;
+  lastMonthIncome: string;
+  lastMonthExpense: string;
+  lastMonthBalance: string;
+  balances: Array<TransactionType>;
+  incomes: Array<TransactionType>;
+  expenses: Array<TransactionType>;
 }
 
 export const getDashboardCard = ({
@@ -16,23 +22,24 @@ export const getDashboardCard = ({
   lastMonthIncome,
   totalExpense,
   totalIncome,
+  balances,
+  incomes,
+  expenses,
 }: getDashboardCardProps): Array<StatsCardProps> => {
-  const balanceDifference = balance / lastMonthBalance;
-  const incomesDifference = totalIncome / lastMonthIncome;
-  const expensesDifference = totalExpense / lastMonthExpense;
+  const balanceDifference = getCurrencyValue(balance) / getCurrencyValue(lastMonthBalance);
+  const incomesDifference = getCurrencyValue(totalIncome) / getCurrencyValue(lastMonthIncome);
+  const expensesDifference = getCurrencyValue(totalExpense) / getCurrencyValue(lastMonthExpense);
   const balanceCard: StatsCardProps = {
     label: 'Balance',
-    number: balance.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    }),
+    number: getCurrency(balance),
     ...(balanceDifference !== 1 && {
       statHelper: {
+        from: PERIODS.today.statsLabel,
         type: balanceDifference > 1 ? 'increase' : 'decrease',
         value: (balanceDifference > 1
           ? balanceDifference - 1
           : 1 - balanceDifference
-        ).toLocaleString('pt-br', {
+        ).toLocaleString('en-US', {
           style: 'percent',
           minimumFractionDigits: 2,
         }),
@@ -40,21 +47,23 @@ export const getDashboardCard = ({
     }),
     primaryColor: 'blue.500',
     secondaryColor: 'blue.50',
+    data: balances,
   };
 
   const incomesCard: StatsCardProps = {
     label: 'Total Incomes',
-    number: totalIncome.toLocaleString('pt-br', {
+    number: getCurrencyValue(totalIncome).toLocaleString('en-US', {
       style: 'currency',
       currency: 'BRL',
     }),
     ...(incomesDifference !== 1 && {
       statHelper: {
+        from: PERIODS.today.statsLabel,
         type: incomesDifference > 1 ? 'increase' : 'decrease',
         value: (incomesDifference > 1
           ? incomesDifference - 1
           : 1 - incomesDifference
-        ).toLocaleString('pt-br', {
+        ).toLocaleString('en-US', {
           style: 'percent',
           minimumFractionDigits: 2,
         }),
@@ -62,21 +71,24 @@ export const getDashboardCard = ({
     }),
     primaryColor: 'green.500',
     secondaryColor: 'green.50',
+    data: incomes,
   };
 
   const expensesCard: StatsCardProps = {
     label: 'Total Expenses',
-    number: totalExpense.toLocaleString('pt-br', {
+    number: getCurrencyValue(totalExpense).toLocaleString('en-US', {
       style: 'currency',
       currency: 'BRL',
     }),
     ...(expensesDifference !== 1 && {
       statHelper: {
-        type: expensesDifference > 1 ? 'increase' : 'decrease',
+        from: PERIODS.today.statsLabel,
+        isReverse: true,
+        type: expensesDifference < 1 ? 'increase' : 'decrease',
         value: (expensesDifference > 1
           ? expensesDifference - 1
           : 1 - expensesDifference
-        ).toLocaleString('pt-br', {
+        ).toLocaleString('en-US', {
           style: 'percent',
           minimumFractionDigits: 1,
         }),
@@ -84,6 +96,7 @@ export const getDashboardCard = ({
     }),
     primaryColor: 'red.500',
     secondaryColor: 'red.50',
+    data: expenses,
   };
 
   return [balanceCard, incomesCard, expensesCard];
