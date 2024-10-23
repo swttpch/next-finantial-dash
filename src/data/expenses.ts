@@ -12,3 +12,11 @@ export const getExpensesData = async () => {
     data: Array<TransactionType>;
   };
 };
+
+export const getExpensesByDay = async (days: string) => {
+  const data = await fetch(envVariables.NEXT_URL + `/api/expenses/by-day?days=${days}`, {
+    method: 'GET',
+    cache: 'force-cache',
+  });
+  return (await data.json()) as Array<{ value: string; date: string }>;
+};

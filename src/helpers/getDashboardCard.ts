@@ -10,9 +10,9 @@ interface getDashboardCardProps {
   lastMonthIncome: string;
   lastMonthExpense: string;
   lastMonthBalance: string;
-  balances: Array<TransactionType>;
-  incomes: Array<TransactionType>;
-  expenses: Array<TransactionType>;
+  balances: Array<{ value: string; date: string }>;
+  incomes: Array<{ value: string; date: string }>;
+  expenses: Array<{ value: string; date: string }>;
 }
 
 export const getDashboardCard = ({

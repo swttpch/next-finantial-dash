@@ -12,3 +12,11 @@ export const getIncomesData = async () => {
     data: Array<TransactionType>;
   };
 };
+
+export const getIncomesByDay = async (days: string) => {
+  const data = await fetch(envVariables.NEXT_URL + `/api/incomes/by-day?days=${days}`, {
+    method: 'GET',
+    cache: 'force-cache',
+  });
+  return (await data.json()) as Array<{ value: string; date: string }>;
+};

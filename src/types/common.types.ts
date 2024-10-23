@@ -18,5 +18,5 @@ export interface StatsCardProps {
   };
   primaryColor: string;
   secondaryColor: string;
-  data: Array<TransactionType>;
+  data: Array<{ value: string; date: string }>;
 }

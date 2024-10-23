@@ -2,15 +2,16 @@ import { Button, Flex, Heading } from '@chakra-ui/react';
 
 interface PageTitleProps {
   title: string;
+  children?: React.ReactNode;
 }
-function PageTitle({ title }: PageTitleProps) {
+function PageTitle({ title, children }: PageTitleProps) {
   return (
     <>
       <Flex justify={'space-between'} gap={6} w={'full'} align={'center'}>
         <Heading as={'h1'} size={'xl'}>
           {title}
         </Heading>
-        {/* <Button colorScheme="cyan">Adicionar</Button> */}
+        {children}
       </Flex>
     </>
   );

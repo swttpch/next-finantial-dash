@@ -18,7 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 interface SimpleLineChartProps extends BoxProps {
   chartColor: string;
-  data: TransactionType[];
+  data: { value: string; date: string }[];
 }
 
 function SimpleLineChart({ chartColor, data, ...rest }: SimpleLineChartProps) {
@@ -30,7 +30,7 @@ function SimpleLineChart({ chartColor, data, ...rest }: SimpleLineChartProps) {
           datasets: [
             {
               label: '',
-              data: data.map((item) => item.amount),
+              data: data.map((item) => item.value),
               fill: false,
               borderColor: chartColor,
               tension: 0.4,
