@@ -8,10 +8,10 @@ import { getBalances } from '@/data/balance';
 import { getExpenses } from '@/data/expenses';
 import { getHistoryData } from '@/data/history';
 import { getIncomes } from '@/data/incomes';
-import { getIndustries } from '@/data/industries';
 import { getStates } from '@/data/states';
 import { getDashboardCard } from '@/helpers/getDashboardCard';
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
+import { IoFilterCircleOutline } from 'react-icons/io5';
 
 export default async function Dashboard({
   searchParams,
@@ -27,11 +27,10 @@ export default async function Dashboard({
   const history = await getHistoryData({ page: Number(page), pageSize: Number(pageSize) });
   const states = await getStates();
   const accounts = await getAccounts();
-  const industries = await getIndustries();
   return (
     <>
       <PageTitle title="Summary">
-        <FilterDrawer states={states} accounts={accounts} industries={industries} />
+        <FilterDrawer states={states} accounts={accounts} />
       </PageTitle>
       <Flex
         direction={{ base: 'column', md: 'row' }}
