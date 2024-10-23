@@ -1,8 +1,8 @@
 import { TransactionType } from '@/types/transaction.types';
 import { envVariables } from '@/utils/env';
 
-export const getBalanceData = async (period: 'today' | 'last_3_days' | 'last_week' = 'today') => {
-  const data = await fetch(envVariables.NEXT_URL + `/api/balances?period=${period}`, {
+export const getBalanceData = async () => {
+  const data = await fetch(envVariables.NEXT_URL + `/api/balances`, {
     method: 'GET',
     cache: 'force-cache',
   });

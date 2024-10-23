@@ -13,12 +13,9 @@ export default async function Home({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const period = (await searchParams).period as string;
   const balances = await getBalanceData();
   const expenses = await getExpensesData();
   const incomes = await getIncomesData();
-  const expensesByPeriod = await getExpensesData(period as 'today');
-  const incomesByPeriod = await getIncomesData(period as 'today');
   return (
     <>
       <PageTitle title="Summary" />
@@ -52,9 +49,7 @@ export default async function Home({
       </Flex>
       <Flex gap={12} alignSelf={'stretch'} direction={{ base: 'column', md: 'row' }}>
         <ActivityGraph
-          incomes={incomesByPeriod.data}
           incomesColor={'green.500'}
-          expenses={expensesByPeriod.data}
           expensesColor={'red.500'}
         />
         <HomeHistoryTable />

@@ -4,9 +4,6 @@ import { StatsCardProps } from '@/types/common.types';
 import { Card, CardBody, Flex, Stat, StatArrow, StatLabel, Text, useToken } from '@chakra-ui/react';
 
 import SimpleLineChart from './Charts/SimpleLineChart';
-import { usePeriod } from '@/hooks/usePeriod';
-import { PERIODS } from '@/constants/periods';
-
 function StatsCard({
   label,
   number,
@@ -16,7 +13,6 @@ function StatsCard({
   data,
 }: StatsCardProps) {
   const tokenColor = useToken('colors', primaryColor);
-  const { period } = usePeriod();
   return (
     <>
       <Card data-type="Card" overflow="hidden" flex={1} bgColor={secondaryColor}>
