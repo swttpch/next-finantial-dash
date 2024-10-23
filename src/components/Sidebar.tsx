@@ -1,6 +1,17 @@
 import { LinkItemProps } from '@/types/common.types';
-import { BoxProps, CloseButton, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  BoxProps,
+  Button,
+  CloseButton,
+  Flex,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { NavItem } from './NavItem';
+import { IoExitOutline } from 'react-icons/io5';
+import { signOut } from '../auth';
+import { logout } from '@/helpers/logout';
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -20,17 +31,24 @@ export const SidebarContent = ({ onClose, items, ...rest }: SidebarProps) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="xl" fontWeight="bold">
-          Finantial App
-        </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+      <Stack spacing={2} flex={1}>
+        <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+          <Text fontSize="xl" fontWeight="bold">
+            Finantial App
+          </Text>
+          <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+        </Flex>
+        {items.map((link) => (
+          <NavItem href={link.href} key={link.name} icon={link.icon}>
+            {link.name}
+          </NavItem>
+        ))}
+      </Stack>
+      <Flex as="form" action={async () => logout()} p={8} direction={'column'}>
+        <Button type="submit" colorScheme="red" alignSelf={'stretch'} rightIcon={<IoExitOutline />}>
+          Logout
+        </Button>
       </Flex>
-      {items.map((link) => (
-        <NavItem href={link.href} key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
     </Flex>
   );
 };

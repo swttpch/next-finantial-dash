@@ -22,7 +22,6 @@ export const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
       {...(isActive ? {} : { href })}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
-      sx={{}}
     >
       <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" {...styles} {...rest}>
         {icon && (

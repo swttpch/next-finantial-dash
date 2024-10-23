@@ -1,23 +1,18 @@
 'use client';
 
-import React from 'react';
+import { MobileNav } from '@/components/MobileNav';
+import { SidebarContent } from '@/components/Sidebar';
+import { LINK_ITEMS } from '@/constants/sidemenu.constants';
 import {
+  useDisclosure,
   Box,
   useColorModeValue,
   Drawer,
   DrawerContent,
-  useDisclosure,
   Flex,
 } from '@chakra-ui/react';
-import { SidebarContent } from '@/components/Sidebar';
-import { MobileNav } from '@/components/MobileNav';
-import { LINK_ITEMS } from '@/constants/sidemenu.constants';
 
-interface DefaultLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function DefaultLayout({ children }: DefaultLayoutProps) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.900')}>
