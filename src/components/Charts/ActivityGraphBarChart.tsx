@@ -59,7 +59,7 @@ function ActivityGraphLineChart({
             },
             {
               label: 'Expenses',
-              data: data.map((item) => getCurrencyValue(item.expenses)),
+              data: data.map((item) => getCurrencyValue(item.expenses) * -1),
               backgroundColor: colorToken[1],
               xAxisID: 'x',
               stack: 'Stack 1',

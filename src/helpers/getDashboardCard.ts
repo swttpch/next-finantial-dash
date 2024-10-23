@@ -1,6 +1,5 @@
 import { StatsCardProps } from '@/types/common.types';
 import { getCurrency, getCurrencyValue } from './getCurrencyValue';
-import { TransactionType } from '@/types/transaction.types';
 import { PERIODS } from '@/constants/periods';
 
 interface getDashboardCardProps {
@@ -51,7 +50,7 @@ export const getDashboardCard = ({
   };
 
   const incomesCard: StatsCardProps = {
-    label: 'Total Incomes',
+    label: 'Today incomes',
     number: getCurrencyValue(totalIncome).toLocaleString('en-US', {
       style: 'currency',
       currency: 'BRL',
@@ -75,8 +74,8 @@ export const getDashboardCard = ({
   };
 
   const expensesCard: StatsCardProps = {
-    label: 'Total Expenses',
-    number: getCurrencyValue(totalExpense).toLocaleString('en-US', {
+    label: 'Today expenses',
+    number: (getCurrencyValue(totalExpense) * -1).toLocaleString('en-US', {
       style: 'currency',
       currency: 'BRL',
     }),
