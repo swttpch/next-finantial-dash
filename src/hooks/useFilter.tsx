@@ -1,6 +1,6 @@
 import { redirect, useSearchParams, useRouter } from 'next/navigation';
 
-export const usePeriod = () => {
+export const useFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const period = searchParams.get('period') ?? '7';

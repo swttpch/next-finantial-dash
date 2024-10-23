@@ -3,10 +3,10 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
 import ActivityGraphLineChart from './Charts/ActivityGraphBarChart';
 import { ActivityGraphLineChartProps } from '@/types/charts.types';
-import { usePeriod } from '@/hooks/usePeriod';
+import { useFilter } from '@/hooks/useFilter';
 
 function ActivityGraph({ ...props }: ActivityGraphLineChartProps) {
-  const { period } = usePeriod();
+  const { period } = useFilter();
   return (
     <Flex datatype="activity-graph" direction="column" gap={4} flex={1}>
       <Flex datatype="activity-graph-head" direction="row" justify="space-between">

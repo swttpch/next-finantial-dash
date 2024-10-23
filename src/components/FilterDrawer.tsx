@@ -19,6 +19,7 @@ import {
 import React from 'react';
 import { IoFilterCircleOutline } from 'react-icons/io5';
 import { Select } from 'chakra-react-select';
+import { DatePickerInput } from './DatePicker';
 
 interface FilterDrawerProps {
   states: { value: string; label: string }[];
@@ -79,6 +80,10 @@ function FilterDrawer({ states, accounts, industries }: FilterDrawerProps) {
                   closeMenuOnSelect={false}
                   size="sm"
                 />
+              </FormControl>
+              <FormControl p={4}>
+                <FormLabel>Date</FormLabel>
+                <DatePickerInput />
               </FormControl>
             </DrawerBody>
 

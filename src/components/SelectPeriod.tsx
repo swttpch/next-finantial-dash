@@ -1,11 +1,11 @@
 'use client';
 
-import { usePeriod } from '@/hooks/usePeriod';
+import { useFilter } from '@/hooks/useFilter';
 import { Select } from '@chakra-ui/react';
 import { redirect, useSearchParams } from 'next/navigation';
 
 function SelectPeriod() {
-  const { period, setPeriod } = usePeriod();
+  const { period, setPeriod } = useFilter();
 
   return (
     <Select
