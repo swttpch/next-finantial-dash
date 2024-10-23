@@ -18,10 +18,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useFilter } from '@/hooks/useFilter';
 
 export const DatePickerInput = () => {
-  const [startDate, setStartDate] = useState<string>();
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { period } = useFilter();
+  const [startDate, setStartDate] = useState<string>(period);
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   const setDate = (date: Date | null) => {
     if (!date) return;
@@ -30,18 +32,6 @@ export const DatePickerInput = () => {
 
   return (
     <Flex direction={'column'} align={'center'} gap={2}>
-      <Input display={'none'} name="period" value={startDate} />
-      <Button variant={'outline'} onClick={onOpen} w={'100%'} rightIcon={<ChevronDownIcon />}>
-        {startDate === '7' || startDate === '15' || startDate === '30'
-          ? `Last ${startDate} days`
-          : startDate
-          ? new Date(startDate).toLocaleDateString('en-US', {
-              month: '2-digit',
-              day: '2-digit',
-              year: 'numeric',
-            })
-          : 'Select a date'}
-      </Button>
       {isOpen && (
         <Box
           position={'fixed'}
@@ -52,15 +42,19 @@ export const DatePickerInput = () => {
           onClick={onClose}
         ></Box>
       )}
-      {isOpen && (
-        <>
+      <Box h={0} position={'relative'} w={'full'}>
+        {isOpen && (
           <Flex
+            position={'absolute'}
+            left={-2.5}
+            bottom={0}
             p={2}
             gap={2}
-            rounded={'xs'}
+            rounded={'sm'}
             border={'1px'}
             borderColor={'gray.200'}
             direction={'column'}
+            bg={'white'}
           >
             <DatePicker
               inline
@@ -93,8 +87,20 @@ export const DatePickerInput = () => {
               </Stack>
             </RadioGroup>
           </Flex>
-        </>
-      )}
+        )}
+      </Box>
+      <Input display={'none'} name="period" value={startDate} />
+      <Button variant={'outline'} onClick={onToggle} w={'100%'} rightIcon={<ChevronDownIcon />}>
+        {startDate === '7' || startDate === '15' || startDate === '30'
+          ? `Last ${startDate} days`
+          : startDate
+          ? new Date(startDate).toLocaleDateString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric',
+            })
+          : 'Select a date'}
+      </Button>
     </Flex>
   );
 };

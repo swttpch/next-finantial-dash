@@ -20,6 +20,7 @@ import React from 'react';
 import { IoFilterCircleOutline } from 'react-icons/io5';
 import { Select } from 'chakra-react-select';
 import { DatePickerInput } from './DatePicker';
+import { useFilter } from '@/hooks/useFilter';
 
 interface FilterDrawerProps {
   states: { value: string; label: string }[];
@@ -30,6 +31,7 @@ interface FilterDrawerProps {
 function FilterDrawer({ states, accounts, industries }: FilterDrawerProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement | null>(null);
+  const { states: curStates, accounts: curAccounts, industries: curIndustries } = useFilter();
   return (
     <>
       <Button
@@ -56,6 +58,7 @@ function FilterDrawer({ states, accounts, industries }: FilterDrawerProps) {
                   options={states}
                   placeholder="Select some states"
                   closeMenuOnSelect={false}
+                  defaultValue={states.filter((state) => curStates.includes(state.value))}
                   size="sm"
                 />
               </FormControl>
@@ -67,6 +70,7 @@ function FilterDrawer({ states, accounts, industries }: FilterDrawerProps) {
                   options={accounts}
                   placeholder="Select some accounts"
                   closeMenuOnSelect={false}
+                  defaultValue={accounts.filter((account) => curAccounts.includes(account.value))}
                   size="sm"
                 />
               </FormControl>
@@ -78,6 +82,9 @@ function FilterDrawer({ states, accounts, industries }: FilterDrawerProps) {
                   options={industries}
                   placeholder="Select some industries"
                   closeMenuOnSelect={false}
+                  defaultValue={industries.filter((industry) =>
+                    curIndustries.includes(industry.value),
+                  )}
                   size="sm"
                 />
               </FormControl>
