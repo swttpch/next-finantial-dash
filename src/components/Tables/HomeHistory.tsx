@@ -1,11 +1,9 @@
 'use client';
-import { HISTORY_PATH } from '@/constants/paths.constants';
 import { usePagination } from '@/hooks/usePagination';
 import { TransactionType } from '@/types/transaction.types';
 import {
   Flex,
   Heading,
-  Link as ChakraLink,
   Table,
   TableContainer,
   Tbody,
@@ -16,7 +14,6 @@ import {
   Select,
   Tooltip,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 function HomeHistoryTable({
