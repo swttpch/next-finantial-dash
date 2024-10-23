@@ -11,7 +11,6 @@ export const getCurrency = (value: string): string => {
 };
 
 export const getCurrencyValue = (value: string): number => {
-  console.log(value);
   const valueNum = Number(value);
   if (isNaN(valueNum)) {
     throw new Error('Invalid value');

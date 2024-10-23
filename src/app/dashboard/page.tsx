@@ -3,10 +3,10 @@ import PageTitle from '@/components/PageTitle';
 import SelectPeriod from '@/components/SelectPeriod';
 import StatsCard from '@/components/StatsCard';
 import HomeHistoryTable from '@/components/Tables/HomeHistory';
-import { getBalanceByDay, getBalanceData } from '@/data/balance';
-import { getExpensesByDay, getExpensesData } from '@/data/expenses';
+import { getBalances } from '@/data/balance';
+import { getExpenses } from '@/data/expenses';
 import { getHistoryData } from '@/data/history';
-import { getIncomesByDay, getIncomesData } from '@/data/incomes';
+import { getIncomes } from '@/data/incomes';
 import { getDashboardCard } from '@/helpers/getDashboardCard';
 import { Button, Flex } from '@chakra-ui/react';
 import { IoFilterCircleOutline } from 'react-icons/io5';
@@ -19,9 +19,9 @@ export default async function Dashboard({
   const period = ((await searchParams).period as string) || '7';
   const page = ((await searchParams).page as string) || '1';
   const pageSize = ((await searchParams).pagesize as string) || '10';
-  const balancesByDay = await getBalanceByDay(period);
-  const expensesByDay = await getExpensesByDay(period);
-  const incomesByDay = await getIncomesByDay(period);
+  const balancesByDay = await getBalances(period);
+  const expensesByDay = await getExpenses(period);
+  const incomesByDay = await getIncomes(period);
   const history = await getHistoryData({ page: Number(page), pageSize: Number(pageSize) });
   return (
     <>

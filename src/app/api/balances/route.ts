@@ -1,54 +1,71 @@
-import { CURRENT_TIME } from '@/constants/common';
-import { getCurrencyValue } from '@/helpers/getCurrencyValue';
 import { TransactionType } from '@/types/transaction.types';
 import { promises as fs } from 'fs';
+
 // TODO: add cache control
 export async function GET(request: Request) {
+  const searchParams = new URL(request.url).searchParams;
+  const days = searchParams.get('days');
   const file = await fs.readFile(process.cwd() + '/transactions.json', 'utf8');
-  const currentMonth = new Date(CURRENT_TIME).getMonth();
-  const currentYear = new Date(CURRENT_TIME).getFullYear();
+  const rawData = JSON.parse(file) as Array<TransactionType>;
 
-  const data = (JSON.parse(file) as Array<TransactionType>).filter((transaction) => {
-    const transactionDate = new Date(transaction.date);
+  const transactionsByDay = rawData
+    .sort((a, b) => a.date - b.date)
+    .reduce((acc, transaction) => {
+      const date = new Date(transaction.date).toISOString().split('T')[0];
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(transaction);
+      return acc;
+    }, {} as Record<string, TransactionType[]>);
 
-    return (
-      transactionDate.getDate() === new Date(CURRENT_TIME).getDate() &&
-      transactionDate.getMonth() === currentMonth &&
-      transactionDate.getFullYear() === currentYear
-    );
-  });
-
-  const beforeData = (JSON.parse(file) as Array<TransactionType>).filter((transaction) => {
-    const transactionDate = new Date(transaction.date);
-
-    const yesterday = new Date(CURRENT_TIME);
-    yesterday.setDate(yesterday.getDate() - 1);
-    return (
-      transactionDate.getDate() === yesterday.getDate() &&
-      transactionDate.getMonth() === yesterday.getMonth() &&
-      transactionDate.getFullYear() === yesterday.getFullYear()
-    );
-  });
-
-  return new Response(
-    JSON.stringify({
-      total: data.reduce((acc, cur) => (acc += getCurrencyValue(cur.amount)), 0).toString(),
-      lastMonth: beforeData
-        .reduce((acc, cur) => (acc += getCurrencyValue(cur.amount)), 0)
-        .toString(),
-      data: data.sort((a, b) => {
-        return b.date - a.date;
-      }),
-      beforeData: beforeData.sort((a, b) => {
-        return b.date - a.date;
-      }),
-    }),
-    {
-      headers: {
-        'content-type': 'application/json',
+  let runningBalance = 0; // Initialize a running balance to track old balance across iterations
+  const responseData = Object.keys(transactionsByDay).reduce((acc, cur, index) => {
+    const total = transactionsByDay[cur].reduce(
+      (innerAcc, current) => {
+        const amount = Number(current.amount);
+        if (current.transaction_type === 'deposit') {
+          innerAcc.incomes += amount;
+          innerAcc.balance += amount;
+        }
+        if (current.transaction_type === 'withdraw') {
+          innerAcc.expenses += amount;
+          innerAcc.balance -= amount;
+        }
+        return innerAcc;
       },
-      status: 200,
-      statusText: 'OK',
-    },
+      {
+        balance: 0,
+        incomes: 0,
+        expenses: 0,
+      },
+    );
+
+    const oldBalance = runningBalance; // Use the running balance as old balance
+    const newBalance = oldBalance + total.balance;
+    acc.push({
+      value: newBalance.toString(),
+      date: cur,
+      incomes: total.incomes.toString(),
+      expenses: total.expenses.toString(),
+      old_balance: oldBalance.toString(),
+    });
+
+    runningBalance = newBalance; // Update running balance for the next iteration
+
+    return acc;
+  }, [] as Array<{ value: string; date: string; incomes: string; expenses: string; old_balance: string }>);
+
+  const slicedData = responseData.slice(
+    responseData.length - (Number(days) || 0),
+    responseData.length,
   );
+
+  return new Response(JSON.stringify(slicedData), {
+    headers: {
+      'content-type': 'application/json',
+    },
+    status: 200,
+    statusText: 'OK',
+  });
 }
