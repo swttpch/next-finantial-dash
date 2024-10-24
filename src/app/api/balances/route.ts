@@ -1,3 +1,4 @@
+import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
 import { TransactionType } from '@/types/transaction.types';
 import { promises as fs } from 'fs';
 
@@ -5,8 +6,7 @@ import { promises as fs } from 'fs';
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const days = searchParams.get('days');
-  const file = await fs.readFile(process.cwd() + '/transactions.json', 'utf8');
-  const rawData = JSON.parse(file) as Array<TransactionType>;
+  const rawData = await readJsonAndReturnRaw();
 
   const transactionsByDay = rawData
     .sort((a, b) => a.date - b.date)

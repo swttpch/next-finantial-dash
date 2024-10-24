@@ -1,3 +1,4 @@
+import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
 import { TransactionType } from '@/types/transaction.types';
 import { promises as fs } from 'fs';
 
@@ -17,9 +18,8 @@ export async function GET(request: Request) {
   const industryList = Array.isArray(industries) ? industries : [industries];
   const stateList = Array.isArray(states) ? states : [states];
 
-  const file = await fs.readFile(process.cwd() + '/transactions.json', 'utf8');
+  const rawData = await readJsonAndReturnRaw();
   let filteredData: Array<TransactionType> = [];
-  const rawData = JSON.parse(file) as Array<TransactionType>;
 
   rawData.forEach((transaction) => {
     if (accountList.length > 0 && !accountList.includes(transaction.account)) {
