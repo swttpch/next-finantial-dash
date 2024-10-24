@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financial Dashboard
+
+A Financial Dashboard built with Next.js, utilizing Typescript, Chakra UI, and Chart.js for data visualization, along with NextAuth for authentication. This dashboard provides a comprehensive platform for financial data visualization and management.
+
+![Powered by Vercel](https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg)
+
+## Screenshot
+
+### Dashboard
+
+https://next-finantial-dash.vercel.app
+
+| Mobile (collapsed)                                                                                                                                                                        | Mobile (expand)                                                                                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973509-f681c230-54ba-4ee5-bd8c-7929ef24b6aa.png" />](https://financial-dashboard.vercel.app) | [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973862-29c311ab-8867-4399-ad4d-01f2d073d7a2.png" />](https://financial-dashboard.vercel.app) |
+
+### Login
+
+https://financial-dashboard.vercel.app/login
+
+[<img alt="Login" width="400" src="https://user-images.githubusercontent.com/7660346/180629556-539b6157-b34f-4ecc-aed9-b34f94d5d2ef.png" />](https://financial-dashboard.vercel.app/login)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- **Node.js v20**
+- **npm**
+
+### Steps to initiate the repo:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/swttpch/next-finantial-dash
+```
+
+2. Navigate to the project folder:
+
+```bash
+cd financial-dashboard
+```
+
+3. Copy the contents from .env.example to a new file named .env:
+
+```bash
+cp .env.example .env
+```
+
+4. Generate a JWT secret:
+
+```bash
+openssl rand -base64 32
+```
+
+5. Copy the generated hash and set it in the .env file for the JWT_SECRET variable.
+
+6. Install the dependencies:
+
+```bash
+npm install
+```
+
+7. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+8. Open http://localhost:3000 in your browser to view the app.
