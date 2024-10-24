@@ -13,7 +13,13 @@ function ActivityGraph({ ...props }: ActivityGraphLineChartProps) {
         <Heading as={'h2'} size={'md'} w={'full'}>
           Activity Graph
         </Heading>
-        <Text whiteSpace={'nowrap'}>Last {period} days</Text>
+        <Text whiteSpace={'nowrap'}>
+          {period === null
+            ? 'Last 7 days'
+            : isNaN(Number(period))
+            ? new Date(period).toLocaleDateString('en-US')
+            : `Last ${period} days`}
+        </Text>
       </Flex>
       <Flex
         datatype="activity-graph-body"

@@ -22,7 +22,7 @@ import { useFilter } from '@/hooks/useFilter';
 
 export const DatePickerInput = () => {
   const { period } = useFilter();
-  const [startDate, setStartDate] = useState<string>(period);
+  const [startDate, setStartDate] = useState<string>(period || '7');
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   const setDate = (date: Date | null) => {

@@ -31,19 +31,20 @@ export const getDashboardCard = ({
   const balanceCard: StatsCardProps = {
     label: 'Balance',
     number: getCurrency(balance),
-    ...(balanceDifference !== 1 && {
-      statHelper: {
-        from: PERIODS.today.statsLabel,
-        type: balanceDifference > 1 ? 'increase' : 'decrease',
-        value: (balanceDifference > 1
-          ? balanceDifference - 1
-          : 1 - balanceDifference
-        ).toLocaleString('en-US', {
-          style: 'percent',
-          minimumFractionDigits: 2,
-        }),
-      },
-    }),
+    ...(!isNaN(balanceDifference) &&
+      balanceDifference !== 1 && {
+        statHelper: {
+          from: PERIODS.today.statsLabel,
+          type: balanceDifference > 1 ? 'increase' : 'decrease',
+          value: (balanceDifference > 1
+            ? balanceDifference - 1
+            : 1 - balanceDifference
+          ).toLocaleString('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+          }),
+        },
+      }),
     primaryColor: 'blue.500',
     secondaryColor: 'blue.50',
     data: balances,
@@ -55,19 +56,20 @@ export const getDashboardCard = ({
       style: 'currency',
       currency: 'BRL',
     }),
-    ...(incomesDifference !== 1 && {
-      statHelper: {
-        from: PERIODS.today.statsLabel,
-        type: incomesDifference > 1 ? 'increase' : 'decrease',
-        value: (incomesDifference > 1
-          ? incomesDifference - 1
-          : 1 - incomesDifference
-        ).toLocaleString('en-US', {
-          style: 'percent',
-          minimumFractionDigits: 2,
-        }),
-      },
-    }),
+    ...(!isNaN(incomesDifference) &&
+      incomesDifference !== 1 && {
+        statHelper: {
+          from: PERIODS.today.statsLabel,
+          type: incomesDifference > 1 ? 'increase' : 'decrease',
+          value: (incomesDifference > 1
+            ? incomesDifference - 1
+            : 1 - incomesDifference
+          ).toLocaleString('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+          }),
+        },
+      }),
     primaryColor: 'green.500',
     secondaryColor: 'green.50',
     data: incomes,
@@ -79,20 +81,21 @@ export const getDashboardCard = ({
       style: 'currency',
       currency: 'BRL',
     }),
-    ...(expensesDifference !== 1 && {
-      statHelper: {
-        from: PERIODS.today.statsLabel,
-        isReverse: true,
-        type: expensesDifference < 1 ? 'increase' : 'decrease',
-        value: (expensesDifference > 1
-          ? expensesDifference - 1
-          : 1 - expensesDifference
-        ).toLocaleString('en-US', {
-          style: 'percent',
-          minimumFractionDigits: 1,
-        }),
-      },
-    }),
+    ...(!isNaN(expensesDifference) &&
+      expensesDifference !== 1 && {
+        statHelper: {
+          from: PERIODS.today.statsLabel,
+          isReverse: true,
+          type: expensesDifference < 1 ? 'increase' : 'decrease',
+          value: (expensesDifference > 1
+            ? expensesDifference - 1
+            : 1 - expensesDifference
+          ).toLocaleString('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 1,
+          }),
+        },
+      }),
     primaryColor: 'red.500',
     secondaryColor: 'red.50',
     data: expenses,

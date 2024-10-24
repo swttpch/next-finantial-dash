@@ -6,12 +6,13 @@ import { promises as fs } from 'fs';
 // TODO: add cache control
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
-  const days = searchParams.get('period');
+
   const rawData = await readJsonAndReturnRaw();
   const filteredData = filterRawData(rawData, {
     accounts: searchParams.getAll('accounts'),
     industries: searchParams.getAll('industries'),
     states: searchParams.getAll('states'),
+    date: searchParams.get('period') ?? undefined,
   });
   const transactionsByDay = filteredData
     .sort((a, b) => a.date - b.date)
@@ -61,12 +62,7 @@ export async function GET(request: Request) {
     return acc;
   }, [] as Array<{ value: string; date: string; incomes: string; expenses: string; old_balance: string }>);
 
-  const slicedData = responseData.slice(
-    responseData.length - (Number(days) || 0),
-    responseData.length,
-  );
-
-  return new Response(JSON.stringify(slicedData), {
+  return new Response(JSON.stringify(responseData), {
     headers: {
       'content-type': 'application/json',
     },

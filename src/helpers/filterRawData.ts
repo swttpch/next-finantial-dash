@@ -16,23 +16,19 @@ export const filterRawData = (
   },
 ) => {
   let filteredData: Array<TransactionType> = [];
-
   rawData.forEach((transaction) => {
-    if (!accountList || (accountList.length > 0 && !accountList.includes(transaction.account))) {
-      return;
+    if (accountList) {
+      if (accountList.length > 0 && !accountList.includes(transaction.account)) return;
     }
-    if (
-      !industryList ||
-      (industryList.length > 0 && !industryList.includes(transaction.industry))
-    ) {
-      return;
+    if (industryList) {
+      if (industryList.length > 0 && !industryList.includes(transaction.industry)) return;
     }
-    if (!stateList || (stateList.length > 0 && !stateList.includes(transaction.state))) {
-      return;
+    if (stateList) {
+      if (stateList.length > 0 && !stateList.includes(transaction.state)) return;
     }
     if (dateFilter) {
       if (isNaN(Number(dateFilter))) {
-        if (new Date(transaction.date).getTime() !== new Date(dateFilter).getTime()) {
+        if (new Date(transaction.date).toISOString().split('T')[0] !== dateFilter) {
           return;
         }
       } else {

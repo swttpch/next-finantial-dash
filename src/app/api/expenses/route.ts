@@ -1,13 +1,17 @@
+import { filterRawData } from '@/helpers/filterRawData';
 import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
 import { TransactionType } from '@/types/transaction.types';
-import { promises as fs } from 'fs';
-// TODO: add cache control
+
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
-  const days = searchParams.get('days');
+  const days = searchParams.get('period');
   const rawData = await readJsonAndReturnRaw();
-
-  const transactionsByDay = rawData
+  const filteredData = filterRawData(rawData, {
+    accounts: searchParams.getAll('accounts'),
+    industries: searchParams.getAll('industries'),
+    states: searchParams.getAll('states'),
+  });
+  const transactionsByDay = filteredData
     .sort((a, b) => a.date - b.date)
     .reduce((acc, transaction) => {
       if (transaction.transaction_type === 'deposit') {

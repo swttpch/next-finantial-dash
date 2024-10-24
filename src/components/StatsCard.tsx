@@ -45,7 +45,9 @@ function StatsCard({
               )}
             </Flex>
           </Stat>
-          <SimpleLineChart chartColor={tokenColor} height={'70px'} data={data} />
+          {data.length > 0 && (
+            <SimpleLineChart chartColor={tokenColor} height={'70px'} data={data} />
+          )}
         </CardBody>
       </Card>
     </>

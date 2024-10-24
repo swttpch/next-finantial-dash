@@ -5,10 +5,10 @@ import PageTitle from '@/components/PageTitle';
 import StatsCard from '@/components/StatsCard';
 import HomeHistoryTable from '@/components/Tables/HomeHistory';
 import { getAccounts } from '@/data/accounts';
-import { getBalances } from '@/data/balance';
-import { getExpenses } from '@/data/expenses';
+import { getBalances, getBalancesByDay } from '@/data/balance';
+import { getExpenses, getExpensesByDay } from '@/data/expenses';
 import { getHistoryData } from '@/data/history';
-import { getIncomes } from '@/data/incomes';
+import { getIncomes, getIncomesByDay } from '@/data/incomes';
 import { getIndustries } from '@/data/industries';
 import { getStates } from '@/data/states';
 import { getDashboardCard } from '@/helpers/getDashboardCard';
@@ -26,9 +26,45 @@ export default async function Dashboard({
 
   const filterIndustries = (await searchParams).industries as string[] | undefined;
   const filterStates = (await searchParams).states as string[] | undefined;
-  const balancesByDay = await getBalances(period);
-  const expensesByDay = await getExpenses(period);
-  const incomesByDay = await getIncomes(period);
+  const balancesByDay = isNaN(Number(period))
+    ? await getBalancesByDay({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      })
+    : await getBalances({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      });
+  const expensesByDay = isNaN(Number(period))
+    ? await getExpensesByDay({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      })
+    : await getExpenses({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      });
+  const incomesByDay = isNaN(Number(period))
+    ? await getIncomesByDay({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      })
+    : await getIncomes({
+        period,
+        accounts: filterAccounts,
+        industries: filterIndustries,
+        states: filterStates,
+      });
   const history = await getHistoryData({
     page: Number(page),
     pageSize: Number(pageSize),
@@ -55,12 +91,12 @@ export default async function Dashboard({
         gap={6}
       >
         {getDashboardCard({
-          balance: balancesByDay[balancesByDay.length - 1].value,
-          lastMonthBalance: balancesByDay[balancesByDay.length - 2].value,
-          lastMonthExpense: balancesByDay[balancesByDay.length - 2].expenses,
-          lastMonthIncome: balancesByDay[balancesByDay.length - 2].incomes,
-          totalExpense: balancesByDay[balancesByDay.length - 1].expenses,
-          totalIncome: balancesByDay[balancesByDay.length - 1].incomes,
+          balance: balancesByDay[balancesByDay.length - 1]?.value || '0000',
+          lastMonthBalance: balancesByDay[balancesByDay.length - 2]?.value || '0000',
+          lastMonthExpense: balancesByDay[balancesByDay.length - 2]?.expenses || '0000',
+          lastMonthIncome: balancesByDay[balancesByDay.length - 2]?.incomes || '0000',
+          totalExpense: balancesByDay[balancesByDay.length - 1]?.expenses || '0000',
+          totalIncome: balancesByDay[balancesByDay.length - 1]?.incomes || '0000',
           balances: balancesByDay,
           incomes: incomesByDay,
           expenses: expensesByDay,
@@ -76,15 +112,13 @@ export default async function Dashboard({
           />
         ))}
       </Flex>
-      <Flex gap={12} alignSelf={'stretch'} direction={{ base: 'column', md: 'row' }}>
-        <ActivityGraph
-          incomesColor={'green.500'}
-          expensesColor={'red.500'}
-          balanceColor={'blue.500'}
-          oldBalanceColor="gray.500"
-          data={balancesByDay}
-        />
-      </Flex>
+      <ActivityGraph
+        incomesColor={'green.500'}
+        expensesColor={'red.500'}
+        balanceColor={'blue.500'}
+        oldBalanceColor="gray.500"
+        data={balancesByDay}
+      />
       <HomeHistoryTable data={history} states={states} />
     </>
   );
