@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import { authConfig } from '@/auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import { callback } from 'chart.js/helpers';
 
 async function validate(email: string, password: string): Promise<boolean> {
   const validEmail = process.env.AUTH_EMAIL;

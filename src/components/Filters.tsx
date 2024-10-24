@@ -2,7 +2,7 @@
 
 import { useFilter } from '@/hooks/useFilter';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Flex, IconButton, Skeleton, Tag, Text, Tooltip } from '@chakra-ui/react';
+import { Flex, IconButton, Tag, Text, Tooltip } from '@chakra-ui/react';
 
 function Filters({ states }: { states: { value: string; label: string }[] }) {
   const {

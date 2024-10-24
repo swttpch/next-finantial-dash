@@ -1,5 +1,4 @@
 import { IconType } from 'react-icons';
-import { TransactionType } from './transaction.types';
 
 export interface LinkItemProps {
   name: string;

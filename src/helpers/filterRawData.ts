@@ -15,7 +15,7 @@ export const filterRawData = (
     states?: Array<string>;
   },
 ) => {
-  let filteredData: Array<TransactionType> = [];
+  const filteredData: Array<TransactionType> = [];
   rawData.forEach((transaction) => {
     if (accountList) {
       if (accountList.length > 0 && !accountList.includes(transaction.account)) return;

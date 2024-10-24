@@ -1,7 +1,6 @@
 import { filterRawData } from '@/helpers/filterRawData';
 import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
 import { TransactionType } from '@/types/transaction.types';
-import { promises as fs } from 'fs';
 
 // TODO: add cache control
 export async function GET(request: Request) {
@@ -25,7 +24,7 @@ export async function GET(request: Request) {
     }, {} as Record<string, TransactionType[]>);
 
   let runningBalance = 0; // Initialize a running balance to track old balance across iterations
-  const responseData = Object.keys(transactionsByDay).reduce((acc, cur, index) => {
+  const responseData = Object.keys(transactionsByDay).reduce((acc, cur) => {
     const total = transactionsByDay[cur].reduce(
       (innerAcc, current) => {
         const amount = Number(current.amount);

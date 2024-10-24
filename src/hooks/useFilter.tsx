@@ -1,5 +1,5 @@
-import { redirect, useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const useFilter = () => {
   const searchParams = useSearchParams();

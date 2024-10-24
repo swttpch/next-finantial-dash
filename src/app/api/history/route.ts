@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   const { accounts, industries, states } = getFiltersFromUrl(request.url);
   const rawData = await readJsonAndReturnRaw();
 
-  let filteredData: Array<TransactionType> = filterRawData(rawData, {
+  const filteredData: Array<TransactionType> = filterRawData(rawData, {
     accounts: accounts,
     industries: industries,
     states: states,

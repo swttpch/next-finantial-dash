@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { NavItem } from './NavItem';
 import { IoExitOutline } from 'react-icons/io5';
-import { signOut } from '../auth';
 import { logout } from '@/helpers/logout';
 
 interface SidebarProps extends BoxProps {

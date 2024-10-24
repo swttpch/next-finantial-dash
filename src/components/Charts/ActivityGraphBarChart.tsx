@@ -2,7 +2,6 @@
 
 import { getCurrencyValue } from '@/helpers/getCurrencyValue';
 import { ActivityGraphLineChartProps } from '@/types/charts.types';
-import { TransactionType } from '@/types/transaction.types';
 import { useToken } from '@chakra-ui/react';
 import {
   Chart as ChartJS,

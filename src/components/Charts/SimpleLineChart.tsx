@@ -1,6 +1,5 @@
 'use client';
 
-import { TransactionType } from '@/types/transaction.types';
 import { Box, BoxProps } from '@chakra-ui/react';
 import {
   Chart as ChartJS,

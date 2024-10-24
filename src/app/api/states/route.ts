@@ -1,9 +1,6 @@
-import { TransactionType } from '@/types/transaction.types';
-import { promises as fs } from 'fs';
-// TODO: add cache control
-export async function GET(request: Request) {
-  const file = await fs.readFile(process.cwd() + '/transactions.json', 'utf8');
-  const rawData = JSON.parse(file) as Array<TransactionType>;
+import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
+export async function GET() {
+  const rawData = await readJsonAndReturnRaw();
 
   const allStates = rawData.reduce((acc, cur) => {
     if (!acc.includes(cur.state)) {

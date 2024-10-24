@@ -1,4 +1,4 @@
-import { Button, Flex, Heading } from '@chakra-ui/react';
+import {  Flex, Heading } from '@chakra-ui/react';
 
 interface PageTitleProps {
   title: string;
