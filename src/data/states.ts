@@ -16,7 +16,10 @@ export const getStateName = async (char: keyof States) => {
 };
 
 export const getStates = async () => {
-  const states = await fetch(envVariables.NEXT_URL + '/api/states');
+  const states = await fetch(envVariables.NEXT_URL + '/api/states', {
+    method: 'GET',
+    cache: 'force-cache',
+  });
   const data = (await states.json()) as string[];
   const refinedData = [];
   for (const el of data) {

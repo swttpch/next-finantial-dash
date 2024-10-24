@@ -15,7 +15,9 @@ export const getBalances = async ({
   const searchParams = getSearchParamsFromFilter({ date: period, accounts, industries, states });
   const data = await fetch(envVariables.NEXT_URL + `/api/balances?${searchParams.toString()}`, {
     method: 'GET',
-    cache: 'force-cache',
+    next: {
+      revalidate: 3600,
+    },
   });
   return (await data.json()) as Array<{
     value: string;
@@ -42,7 +44,9 @@ export const getBalancesByDay = async ({
     envVariables.NEXT_URL + `/api/balances/by-day?${searchParams.toString()}`,
     {
       method: 'GET',
-      cache: 'force-cache',
+      next: {
+        revalidate: 60,
+      },
     },
   );
   return (await data.json()) as Array<{

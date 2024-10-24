@@ -15,7 +15,9 @@ export const getIncomes = async ({
   const searchParams = getSearchParamsFromFilter({ date: period, accounts, industries, states });
   const data = await fetch(envVariables.NEXT_URL + `/api/incomes?${searchParams.toString()}`, {
     method: 'GET',
-    cache: 'force-cache',
+    next: {
+      revalidate: 3600,
+    },
   });
   return (await data.json()) as Array<{ value: string; date: string }>;
 };
@@ -36,7 +38,9 @@ export const getIncomesByDay = async ({
     envVariables.NEXT_URL + `/api/incomes/by-day?${searchParams.toString()}`,
     {
       method: 'GET',
-      cache: 'force-cache',
+      next: {
+        revalidate: 60,
+      },
     },
   );
   return (await data.json()) as Array<{ value: string; date: string }>;

@@ -20,7 +20,9 @@ export const getHistoryData = async ({
 
   const data = await fetch(url, {
     method: 'GET',
-    cache: 'force-cache',
+    next: {
+      revalidate: 60,
+    },
   });
   return (await data.json()) as {
     pagination: {
