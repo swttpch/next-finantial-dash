@@ -61,7 +61,14 @@ openssl rand -base64 32
 
 5. Copy the generated hash and set it in the .env file for the JWT_SECRET variable.
 
-6. Install the dependencies:
+6. For local login during development, update the following environment variables:
+```env
+AUTH_EMAIL='admin'
+AUTH_PASSWORD='admin'
+```
+Then use this credentials to login in the application.
+
+7. Install the dependencies:
 
 ```bash
 npm install
