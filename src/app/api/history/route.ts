@@ -1,40 +1,26 @@
+import { filterRawData } from '@/helpers/filterRawData';
+import { getFiltersFromUrl } from '@/helpers/getFiltersFromUrl';
 import { readJsonAndReturnRaw } from '@/helpers/readJsonAndReturnRaw';
 import { TransactionType } from '@/types/transaction.types';
-import { promises as fs } from 'fs';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get('page');
   const pagesize = searchParams.get('pagesize');
-  const date = searchParams.get('date');
-  const accounts = searchParams.getAll('accounts');
-  const industries = searchParams.getAll('industries');
-  const states = searchParams.getAll('states');
-
+  const period = searchParams.get('period');
+  const periodValue = period && isNaN(Number(period)) ? undefined : period;
   const pageNumber = parseInt(page as string, 10) || 1;
   const pageSize = parseInt(pagesize as string, 10) || 10;
-  const dateFilter = date ? new Date(date as string) : null;
-  const accountList = Array.isArray(accounts) ? accounts : [accounts];
-  const industryList = Array.isArray(industries) ? industries : [industries];
-  const stateList = Array.isArray(states) ? states : [states];
 
+  const { accounts, industries, states } = getFiltersFromUrl(request.url);
+  console.log(accounts);
   const rawData = await readJsonAndReturnRaw();
-  let filteredData: Array<TransactionType> = [];
 
-  rawData.forEach((transaction) => {
-    if (accountList.length > 0 && !accountList.includes(transaction.account)) {
-      return;
-    }
-    if (industryList.length > 0 && !industryList.includes(transaction.industry)) {
-      return;
-    }
-    if (stateList.length > 0 && !stateList.includes(transaction.state)) {
-      return;
-    }
-    if (dateFilter && new Date(transaction.date).getTime() !== dateFilter.getTime()) {
-      return;
-    }
-    filteredData.push(transaction);
+  let filteredData: Array<TransactionType> = filterRawData(rawData, {
+    accounts: accounts,
+    industries: industries,
+    states: states,
+    date: periodValue ?? undefined,
   });
 
   const data = {

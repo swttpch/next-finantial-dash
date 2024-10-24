@@ -25,10 +25,16 @@ function Filters({ states }: { states: { value: string; label: string }[] }) {
     return null;
   }
   return (
-    <Flex gap={2}>
+    <Flex gap={2} wrap={'wrap'}>
       <Text>Filters:</Text>
       {curStates.length > 0 && (
-        <Tag gap={'1'} whiteSpace={'nowrap'} colorScheme="blue" flex={'1 0 1'}>
+        <Tag
+          p={1}
+          gap={'1'}
+          whiteSpace={{ base: 'pre-wrap', md: 'nowrap' }}
+          colorScheme="blue"
+          flex={'1 0 1'}
+        >
           <Text fontWeight={600}>States:</Text>
           <Text fontWeight={400}>
             {curStates
@@ -48,7 +54,13 @@ function Filters({ states }: { states: { value: string; label: string }[] }) {
         </Tag>
       )}
       {accounts && accounts.length > 0 && (
-        <Tag gap={'1'} whiteSpace={'nowrap'} colorScheme="blue" flex={'1 0 1'}>
+        <Tag
+          p={1}
+          gap={'1'}
+          whiteSpace={{ base: 'pre-wrap', md: 'nowrap' }}
+          colorScheme="blue"
+          flex={'1 0 1'}
+        >
           <Text fontWeight={600}>Accounts:</Text>
           <Text fontWeight={400}>{accounts.join(', ')}</Text>
           <div />
@@ -65,7 +77,13 @@ function Filters({ states }: { states: { value: string; label: string }[] }) {
       )}
 
       {industries && industries.length > 0 && (
-        <Tag gap={'1'} whiteSpace={'nowrap'} colorScheme="blue" flex={'1 0 1'}>
+        <Tag
+          p={1}
+          gap={'1'}
+          whiteSpace={{ base: 'pre-wrap', md: 'nowrap' }}
+          colorScheme="blue"
+          flex={'1 0 1'}
+        >
           <Text fontWeight={600}>Industries:</Text>
           <Text fontWeight={400}>{industries.join(', ')}</Text>
           <div />
@@ -81,7 +99,13 @@ function Filters({ states }: { states: { value: string; label: string }[] }) {
         </Tag>
       )}
       {period && period !== '7' && (
-        <Tag gap={'1'} whiteSpace={'nowrap'} colorScheme="blue" flex={'1 0 1'}>
+        <Tag
+          p={1}
+          gap={'1'}
+          whiteSpace={{ base: 'pre-wrap', md: 'nowrap' }}
+          colorScheme="blue"
+          flex={'1 0 1'}
+        >
           <Text fontWeight={600}>Date:</Text>
           <Text fontWeight={400}>
             {!isNaN(Number(period))

@@ -1,3 +1,5 @@
+import { getSearchParamsFromFilter } from '@/helpers/getSearchParamsFromFilter';
+import { IDefaultFilters } from '@/types/query.types';
 import { TransactionType } from '@/types/transaction.types';
 import { envVariables } from '@/utils/env';
 
@@ -8,28 +10,11 @@ export const getHistoryData = async ({
 }: {
   page: number;
   pageSize: number;
-  query?: {
-    date?: string;
-    accounts?: string[];
-    industries?: string[];
-    states?: string[];
-  };
+  query?: IDefaultFilters;
 }) => {
-  const searchParams = new URLSearchParams();
+  const searchParams = getSearchParamsFromFilter(query);
   searchParams.set('page', page.toString());
   searchParams.set('pagesize', pageSize.toString());
-  if (query?.date) {
-    searchParams.set('date', query.date);
-  }
-  if (query?.accounts) {
-    query.accounts.forEach((account) => searchParams.append('accounts', account));
-  }
-  if (query?.industries) {
-    query.industries.forEach((industry) => searchParams.append('industries', industry));
-  }
-  if (query?.states) {
-    query.states.forEach((state) => searchParams.append('states', state));
-  }
 
   const url = new URL(envVariables.NEXT_URL + `/api/history` + `?${searchParams.toString()}`);
 

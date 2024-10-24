@@ -22,10 +22,23 @@ export default async function Dashboard({
   const period = ((await searchParams).period as string) || '7';
   const page = ((await searchParams).page as string) || '1';
   const pageSize = ((await searchParams).pagesize as string) || '10';
+  const filterAccounts = (await searchParams).accounts as string[] | undefined;
+
+  const filterIndustries = (await searchParams).industries as string[] | undefined;
+  const filterStates = (await searchParams).states as string[] | undefined;
   const balancesByDay = await getBalances(period);
   const expensesByDay = await getExpenses(period);
   const incomesByDay = await getIncomes(period);
-  const history = await getHistoryData({ page: Number(page), pageSize: Number(pageSize) });
+  const history = await getHistoryData({
+    page: Number(page),
+    pageSize: Number(pageSize),
+    query: {
+      date: period,
+      accounts: filterAccounts,
+      industries: filterIndustries,
+      states: filterStates,
+    },
+  });
   const states = await getStates();
   const accounts = await getAccounts();
   const industries = await getIndustries();
@@ -72,7 +85,7 @@ export default async function Dashboard({
           data={balancesByDay}
         />
       </Flex>
-      <HomeHistoryTable data={history} />
+      <HomeHistoryTable data={history} states={states} />
     </>
   );
 }
