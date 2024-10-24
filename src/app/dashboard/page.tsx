@@ -1,5 +1,6 @@
 import ActivityGraph from '@/components/ActivityGraph';
 import FilterDrawer from '@/components/FilterDrawer';
+import Filters from '@/components/Filters';
 import PageTitle from '@/components/PageTitle';
 import StatsCard from '@/components/StatsCard';
 import HomeHistoryTable from '@/components/Tables/HomeHistory';
@@ -33,6 +34,7 @@ export default async function Dashboard({
       <PageTitle title="Summary">
         <FilterDrawer states={states} accounts={accounts} industries={industries} />
       </PageTitle>
+      <Filters states={states} />
       <Flex
         direction={{ base: 'column', md: 'row' }}
         alignSelf={'stretch'}
