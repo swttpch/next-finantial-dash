@@ -2,6 +2,7 @@
 
 A Financial Dashboard built with Next.js, utilizing Typescript, Chakra UI, and Chart.js for data visualization, along with NextAuth for authentication. This dashboard provides a comprehensive platform for financial data visualization and management.
 
+
 ![Powered by Vercel](https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg)
 
 ## Screenshot
@@ -10,15 +11,20 @@ A Financial Dashboard built with Next.js, utilizing Typescript, Chakra UI, and C
 
 https://next-finantial-dash.vercel.app
 
+[<img alt="Dashboard" height="278" src="https://github.com/user-attachments/assets/989044b0-bf3f-466e-b581-f9536cc9240d" />](https://next-finantial-dash.vercel.app)
+
 | Mobile (collapsed)                                                                                                                                                                        | Mobile (expand)                                                                                                                                                                           |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973509-f681c230-54ba-4ee5-bd8c-7929ef24b6aa.png" />](https://financial-dashboard.vercel.app) | [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973862-29c311ab-8867-4399-ad4d-01f2d073d7a2.png" />](https://financial-dashboard.vercel.app) |
+
+
+| [<img alt="Dashboard" height="278" src="https://github.com/user-attachments/assets/6293dd2b-b305-4734-b634-01e63b2677fc" />](https://next-finantial-dash.vercel.app) | [<img alt="Dashboard" height="278" src="https://github.com/user-attachments/assets/d35c3aa6-1731-44fe-bcb0-0bb5e2664a0a" />](https://next-finantial-dash.vercel.app) |
 
 ### Login
 
 https://financial-dashboard.vercel.app/login
 
-[<img alt="Login" width="400" src="https://user-images.githubusercontent.com/7660346/180629556-539b6157-b34f-4ecc-aed9-b34f94d5d2ef.png" />](https://financial-dashboard.vercel.app/login)
+
+[<img alt="Login" width="400" src="https://github.com/user-attachments/assets/61bb1705-c3a2-48e5-9fa3-0a368e61493c" />](https://next-finantial-dash.vercel.app/login)
 
 ## Getting Started
 
